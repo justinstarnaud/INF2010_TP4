@@ -23,37 +23,37 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
             // Ne pas modifier ces lignes
 
             /* TODO Ajouter une ligne de code pour construire le heap */
-
+            buildHeap();
         }
 
         /* TODO Implementer le compare pour un MaxHeap et MinHeap */
         protected boolean compare(ValueType first, ValueType second){
-            return false;
+            return first.compareTo(second) > 0  ? true : false;
         }
 
         /* TODO Retourner l'index du parent */
         public int parentIndex(int index){
-            return -1;
+            return index/2;
         }
 
         /* TODO Retourner l'enfant gauche du noeud */
         public int leftChildIndex(int index){
-            return -1;
+            return 2 * index;
         }
 
         /* TODO Retourner l'enfant droit du noeud */
         public int rightChildIndex(int index){
-            return -1;
+            return (2 * index) + 1;
         }
 
         /* TODO Retourner si l'index present est une feuille */
-        public boolean isLeaf(int pos)
-        {
-            return false;
+        public boolean isLeaf(int pos){
+            return leftChildIndex(pos) > size();
         }
 
         /* TODO Constuire le monceau avec les noeuds dans "elements" */
         public void buildHeap(){
+            
         }
 
         /* TODO Echanger les elements qui se retrouve aux indexes currentIndex et parentIndex */

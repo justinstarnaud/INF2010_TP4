@@ -58,11 +58,15 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
 
         /* TODO Echanger les elements qui se retrouve aux indexes currentIndex et parentIndex */
         private void swap(int currentIndex, int parentIndex)
-        {
+        {   ArrayList[currentIndex] = parentIndex;
+            ArrayList[parentIndex] = currentIndex;
         }
 
         /* TODO Ajouter un element dans le monceaux. */
         public void insert(ValueType value){
+            //Prit des ndc il faut ajouter plus car ne suit pas la logique
+            //int currentSize = array.size();
+            //if (currentSize == array.lenth -1){enlargeArray(array.lenth * 2 + 1)};
         }
 
         /* TODO Completer l'implementation des conditions de percolateDown pour un heap */
@@ -73,11 +77,11 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
 
                 child = index * 2;
 
-                if(child != size() /* TODO Ajouter une condition pour evaluer les deux noeuds */) {
+                if(child != size() && array[child + 1 ].compareTo(array[child]) < 0){/* TODO Ajouter une condition pour evaluer les deux noeuds */) {
                     child++;
                 }
 
-                if(true /*TODO Ajouter une condition pour evaluer les deux noeuds */){
+                if(true && array[child].compareTo(temp) < 0){/*TODO Ajouter une condition pour evaluer les deux noeuds */){
                     elements.set(index, elements.get(child));
                 }
                 else
@@ -88,22 +92,22 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
 
         /* TODO En utilisant leftChildIndex, ajouter les elements gauche du Heap dans une liste et les retourner. */
         public List<ValueType> getLeftElements(){
-            return new ArrayList<>();
+            return new ArrayList<Integer>(heap.add(leftChildIndex));
         }
 
         /* TODO En utilisant rightChildIndex, ajouter les droites du Heap dans une liste et les retourner. */
         public List<ValueType> getRightElements(){
-            return new ArrayList<>();
+            return new ArrayList<Integer>(heap.add(rightChildIndex));
         }
 
         /* TODO En utilisant parentIndex, ajouter les noeuds  parents du Heap dans une liste et les retourner. */
         public List<ValueType> getParentElements(){
-            return  new ArrayList<>();
+            return  new ArrayList<Integer>(heap.add(parentIndex));
         }
 
         /* TODO Ajouter les noeuds feuilles du monceau en utilisant isLeaf */
         public List<ValueType> getLeaves(){
-            return new ArrayList<>();
+            return new ArrayList<>(heap.isLeaf()); //comprend pas comment get le/les derniers elements dans les branches de l'arbre
         }
 
 }

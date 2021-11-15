@@ -58,15 +58,16 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
 
         /* TODO Echanger les elements qui se retrouve aux indexes currentIndex et parentIndex */
         private void swap(int currentIndex, int parentIndex)
-        {   ArrayList[currentIndex] = parentIndex;
-            ArrayList[parentIndex] = currentIndex;
+        {   ValueType tampon = this.elements.get(currentIndex);
+            this.elements.set(currentIndex, this.elements.get(parentIndex));
+            this.elements.set(parentIndex, tampon);
         }
 
         /* TODO Ajouter un element dans le monceaux. */
         public void insert(ValueType value){
-            //Prit des ndc il faut ajouter plus car ne suit pas la logique
-            //int currentSize = array.size();
-            //if (currentSize == array.lenth -1){enlargeArray(array.lenth * 2 + 1)};
+            this.size();
+            this.elements.insert();
+            
         }
 
         /* TODO Completer l'implementation des conditions de percolateDown pour un heap */

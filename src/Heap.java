@@ -28,8 +28,8 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
 
         /* TODO Implementer le compare pour un MaxHeap et MinHeap */
         protected boolean compare(ValueType first, ValueType second){
-            if(isMax){return first.compareTo(second) > 0  ? true : false;}
-            return first.compareTo(second) < 0  ? true : false;
+            if(isMax){return first.compareTo(second) > 0;}
+            return first.compareTo(second) < 0;
         }
 
         /* TODO Retourner l'index du parent */

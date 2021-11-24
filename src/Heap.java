@@ -22,51 +22,46 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
             this.elements.addAll(elements);
             // Ne pas modifier ces lignes
 
-            /* TODO Ajouter une ligne de code pour construire le heap */
             buildHeap();
         }
 
-        /* TODO Implementer le compare pour un MaxHeap et MinHeap */
         protected boolean compare(ValueType first, ValueType second){
             if(isMax){return first.compareTo(second) > 0;}
             return first.compareTo(second) < 0;
         }
 
-        /* TODO Retourner l'index du parent */
         public int parentIndex(int index){
             return index/2;
         }
 
-        /* TODO Retourner l'enfant gauche du noeud */
         public int leftChildIndex(int index){
             return 2 * index;
         }
 
-        /* TODO Retourner l'enfant droit du noeud */
         public int rightChildIndex(int index){
             return (2 * index) + 1;
         }
 
-        /* TODO Retourner si l'index present est une feuille */
         public boolean isLeaf(int pos){
             return leftChildIndex(pos) > size();
         }
 
-        /* TODO Constuire le monceau avec les noeuds dans "elements" */
+        public int lastParent(){
+            return this.size()/2;
+        }
+
         public void buildHeap(){
-            for(int i = 1; i < this.size(); i++){
+            for(int i = this.lastParent(); i > 0; i--){
                 percolateDown(i);
             }
         }
 
-        /* TODO Echanger les elements qui se retrouve aux indexes currentIndex et parentIndex */
         private void swap(int currentIndex, int parentIndex)
         {   ValueType tampon = this.elements.get(currentIndex);
             this.elements.set(currentIndex, this.elements.get(parentIndex));
             this.elements.set(parentIndex, tampon);
         }
 
-        /* TODO Ajouter un element dans le monceaux. */
         public void insert(ValueType value){
             this.elements.add(value);
             int index = this.size()-1;
@@ -80,7 +75,6 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
             }
         }
 
-        /* TODO Completer l'implementation des conditions de percolateDown pour un heap */
         private void percolateDown(int index){
             int child;
             ValueType temp = elements.get(index);
@@ -88,11 +82,11 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
 
                 child = index * 2;
 
-                if(child != size() && this.compare( this.elements.get(child + 1), this.elements.get(child) )){/* TODO Ajouter une condition pour evaluer les deux noeuds */
+                if(child != size() && this.compare( this.elements.get(child + 1), this.elements.get(child) )){
                     child++;
                 }
 
-                if(this.compare(this.elements.get(child), temp)){ /*TODO Ajouter une condition pour evaluer les deux noeuds */
+                if(this.compare(this.elements.get(child), temp)){
                     elements.set(index, elements.get(child));
                 }
                 else{
@@ -102,54 +96,34 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
             elements.set(index, temp);
         }
 
-        /* TODO En utilisant leftChildIndex, ajouter les elements gauche du Heap dans une liste et les retourner. */
         public List<ValueType> getLeftElements(){
             List<ValueType> leftList = new ArrayList<ValueType>();
-            int exposant = 1;
-            while(Math.pow(2, exposant) < this.size()){
-                for(int i = (int) Math.pow(2, exposant); i < Math.pow(2, exposant) + Math.pow(2, exposant -1); i++){
-                    if(i < this.size()){
-                        leftList.add(this.elements.get(i));
-                    }
-                }
-                exposant++;
+            for(int i = 1; i <= this.lastParent(); i++){
+                leftList.add(this.elements.get(leftChildIndex(i)));
             }
             return leftList;
         }
 
-        /* TODO En utilisant rightChildIndex, ajouter les droites du Heap dans une liste et les retourner. */
         public List<ValueType> getRightElements(){
             List<ValueType> rightList = new ArrayList<ValueType>();
-            int exposant = 1;
-            while(Math.pow(2, exposant) + Math.pow(2, exposant -1) < this.size()){
-                for(int i = (int) (Math.pow(2, exposant) + Math.pow(2, exposant -1)); i < Math.pow(2, exposant +1); i++){
-                    if(i < this.size()){
-                        rightList.add(this.elements.get(i));
-                    }
-                }
-                exposant++;
+            for(int i = 1; i <= this.lastParent(); i++){
+                rightList.add(this.elements.get(rightChildIndex(i)));
             }
             return rightList;
         }
 
-        /* TODO En utilisant parentIndex, ajouter les noeuds  parents du Heap dans une liste et les retourner. */
         public List<ValueType> getParentElements(){
             List<ValueType> parentList = new ArrayList<ValueType>();
-            int index = 1;
-            while(2 * index < this.size()){
-                parentList.add(this.elements.get(index));
-                index++;
+            for(int i = 1; !isLeaf(i); i++){
+                parentList.add(this.elements.get(i));
             }
             return parentList;
         }
 
-        /* TODO Ajouter les noeuds feuilles du monceau en utilisant isLeaf */
         public List<ValueType> getLeaves(){
             List<ValueType> leafList = new ArrayList<ValueType>();
-            int index = this.size() -1;
-            while(isLeaf(index)){
-                leafList.add(this.elements.get(index));
-                index--;
+            for(int i = this.size(); isLeaf(i); i--){
+                leafList.add(this.elements.get(i));
             }
             return leafList;
         }
